@@ -31,7 +31,7 @@ int main(void)
 				putchar(v_a2);
 				putchar(v_e2);
 
-				if (v != 98)
+				if (v != 99)
 				{
 					putchar(',');
 					putchar(' ');
