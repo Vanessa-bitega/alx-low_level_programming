@@ -2,26 +2,21 @@
 /**
  * rev_string -  reverse as string
  * @s: character to be checked
- * Return: return *s
+ * Return: nothing on success
  */
 void rev_string(char *s)
 {
-	int count = 0, i = 0;
-	char last_char;
+	int count = 0;
+	char last_char = s[0];
+	int i;
 
-	while (*s)
-	{
-		s++;
+	while (s[count] != '\0')
 		count++;
-	}
 	for (i = 0; i < count; i++)
-		s--;
-	for (i = 0; i < (count / 2); i++)
 	{
-		int last = count - 1;
-
-		last_char = s[last - 1];
-		s[last - i] = s[i];
-		s[i] = last_char;
+		count--;
+		last_char = s[i];
+		s[i] = s[count];
+		s[count] = last_char;
 	}
 }
