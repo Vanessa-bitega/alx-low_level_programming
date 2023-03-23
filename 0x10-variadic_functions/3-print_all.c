@@ -1,47 +1,96 @@
-#include "variadic_functions.h"
 #include <stdio.h>
 #include <stdarg.h>
+#include "variadic_functions.h"
 
-void op_char(char)
+/**
+ * printf_char - printfs a char from var args
+ *
+ * @list: va_list to print from
+ *
+ * Return: void
+ */
+void printf_char(va_list list)
 {
-	printf("%c", va_arg(pseudo, char));
+	printf("%c", (char) va_arg(list, int));
 }
 
-void po_int(int)
+/**
+ * printf_int - printfs an int from var args
+ *
+ * @list: va_list to print from
+ *
+ * Return: void
+ */
+void printf_int(va_list list)
 {
-	printf("%d", va_arg(pseudo, int));
+	printf("%d", va_arg(list, int));
 }
 
-void op_float(float)
+/**
+ * printf_float - printfs a float from var args
+ *
+ * @list: va_list to print from
+ *
+ * Return: void
+ */
+void printf_float(va_list list)
 {
-	printf("%f", va_arg(pseudo, float));
+	printf("%f", (float) va_arg(list, double));
 }
 
-void op_string(char *)
+/**
+ * printf_string - printfs a string from var args
+ *
+ * @list: va_list to print from
+ *
+ * Return: void
+ */
+void printf_string(va_list list)
 {
-	printf("%s", va_arg(pseudo, char *));
+	char *str = va_arg(list, char*);
+
+	while (str != NULL)
+	{
+		printf("%s", str);
+		return;
+	}
+	printf("(nil)");
 }
 
+
+/**
+ * print_all - prints various types given a format string for the arguments
+ *
+ * @format: string containing type information for args
+ *
+ * Return: void
+ */
 void print_all(const char * const format, ...)
 {
-	va_list pseudo;
-	va_start(pseudo, format);
+	const char *ptr;
+	va_list list;
+	funckey key[4] = { {printf_char, 'c'}, {printf_int, 'i'},
+			   {printf_float, 'f'}, {printf_string, 's'} };
+	int keyind = 0, notfirst = 0;
 
-	op_t ops[] = {
-		{"c", op_char},
-		{"i", op_int},
-		{"f", op_float},
-		{"s", op_string},
-		{NULL, NULL}
-	};
-	int i;
-
-
-	while()
-	while()
-		if()
-		if()
-		if()
-
+	ptr = format;
+	va_start(list, format);
+	while (format != NULL && *ptr)
+	{
+		if (key[keyind].spec == *ptr)
+		{
+			if (notfirst)
+				printf(", ");
+			notfirst = 1;
+			key[keyind].f(list);
+			ptr++;
+			keyind = -1;
+		}
+		keyind++;
+		ptr += keyind / 4;
+		keyind %= 4;
+	}
 	printf("\n");
+
+	va_end(list);
 }
